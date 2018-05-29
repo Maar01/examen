@@ -53,6 +53,7 @@
 
         .title {
             font-size: 84px;
+            margin-top: 40%;
         }
 
         .links > a {
@@ -72,6 +73,7 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
+    <div class="content">
     @if (Route::has('login'))
         <div class="top-right links">
             @auth
@@ -82,8 +84,8 @@
             @endauth
         </div>
     @endif
-
     @yield('content')
+    </div>
 </div>
 </body>
 </html>

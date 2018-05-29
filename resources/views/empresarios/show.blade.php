@@ -5,34 +5,59 @@
   Time: 4:04 PM--}}
 @extends('layout')
 @section('content')
-    <div class="content">
-        <div class="title m-b-md">
-            Empresario {{$empresario->nombre}}
-            <br>
-            <form method="get" action="/desactivar/{{$empresario->id}}">
-                <button type="submit">Desactivar empresario</button>
-            </form>
+    <div class="title m-b-md">
+        Empresario {{$empresario->nombre}}
+        <br>
+        <form method="get" action="/desactivar/{{$empresario->id}}">
+            <button type="submit">Desactivar empresario</button>
+        </form>
+    </div>
+    <form method="POST" action="/empresarios/{{$empresario->id}}">
+        {{method_field('PATCH')}}
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div>
+            <label>Código:</label>
+            <input type="text" value="{{$empresario->codigo}}" name="codigo">
         </div>
-    <form method="UPDATE" action="empresarios/{{$empresario->id}}">
-        <input type="text" value="{{$empresario->codigo}}">
         <br>
-        <input type="text" value="{{$empresario->razon_social}}">
+        <div>
+            <label> Razón social:  </label>
+            <input type="text" value="{{$empresario->razon_social}}" name="razon_social">
+        </div>
+
         <br>
-        <input type="text" value="{{$empresario->nombre}}">
+        <div>
+            <label>Nombre: </label>
+            <input type="text" value="{{$empresario->nombre}}" name="nombre">
+        </div>
         <br>
-        <input type="text" value="{{$empresario->pais}}">
+        <div>
+            <label>País:</label>
+            <input type="text" value="{{$empresario->pais}}" name="pais">
+        </div>
         <br>
-        <input type="text" value="{{$empresario->estado}}">
+        <div>
+            <label>Estado:</label>
+            <input type="text" value="{{$empresario->estado}}" name="estado">
+        </div>
         <br>
-        <input type="text" value="{{$empresario->ciudad}}">
+        <div>
+            <label>Ciudad:</label>
+            <input type="text" value="{{$empresario->ciudad}}" name="ciudad">
+        </div>
         <br>
-        <input type="text" value="{{$empresario->telefono}}">
+        <div>
+            <label>Teléfono:</label>
+            <input type="text" value="{{$empresario->telefono}}" name="telefono">
+        </div>
         <br>
-        <input type="text" value="{{$empresario->correo}}">
+        <div>
+            <label>Correo</label>
+            <input type="text" value="{{$empresario->correo}}" name="correo">
+        </div>
         <br>
         <button>
             Guardar cambios
         </button>
     </form>
-    </div>
 @endsection

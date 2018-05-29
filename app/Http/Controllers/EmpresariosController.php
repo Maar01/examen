@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Empresario;
+use App\Wsdl\EmpresarioSoap;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\View\View;
-use PHPUnit\Util\Xml;
-use SoapClient;
 
 class EmpresariosController extends Controller
 {
+    use EmpresarioSoap;
     /**
      * Display a listing of the resource.
      *
@@ -22,10 +22,6 @@ class EmpresariosController extends Controller
             'activo');
         $empresarios = Empresario::where('activo', 1)->get();
         return View('empresarios.index')->with(array('encabezados' => $camposEmpresario, 'empresarios' => $empresarios));
-        /*$client = new SoapClient('10.1.10.84:8080/wsa/wsa1/wsdl?targetURI=WSShopping_mxqa');
-        dd($client->__getTypes());
-        dd($client->__getFunctions);
-        dd($client->__soapCall('ejecuta_proceso'));*/
     }
 
     /**
@@ -33,9 +29,20 @@ class EmpresariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crear($codigo_empresario = "")
     {
+        if ($codigo_empresario !== ""){
+            #con el web service
+            //$empresario = $this->consultaEmpresario($id_empresario);
+            #para pruebas
+            $empresario = Empresario::where('codigo', $codigo_empresario)->first();
+            return view('empresarios.create')->with(array('empresario' => $empresario));
+        }
         return view('empresarios.create');
+    }
+
+    public function verificar(Request $request){
+        return redirect()->action('EmpresariosController@crear', ['id_empresario' => $request->all()['codigo']]);
     }
 
     /**
@@ -46,7 +53,9 @@ class EmpresariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Empresario::create($request->except('_token'));
+
+        return redirect()->action('EmpresariosController@index');
     }
 
     /**
@@ -63,16 +72,9 @@ class EmpresariosController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit($id)
-    {
-        //
-    }
-
     public function desactivar($id){
         Empresario::desactivar($id);
         return redirect()->action('EmpresariosController@index');
@@ -87,7 +89,11 @@ class EmpresariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        $nuevos_campos = $request->except(array('_method', '_token'));
+        Empresario::where('id', $id)->update($nuevos_campos);
+
+        return redirect()->action('EmpresariosController@show', ['id'=> $id]);
+
     }
 
     public function borraEmpresario($id){

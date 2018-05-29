@@ -23,7 +23,7 @@ class AddTableEmpresarios extends Migration
             $table->string('ciudad');
             $table->string('telefono');
             $table->string('correo');
-            $table->boolean('activo');
+            $table->boolean('activo')->default(1);
             $table->timestamps();
         });
     }

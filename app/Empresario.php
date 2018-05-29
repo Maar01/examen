@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Empresario extends Model
 {
+    //use SoftDeletes;
     protected $fillable = array('codigo', 'razon_social', 'nombre', 'pais', 'estado', 'ciudad', 'telefono', 'correo',
         'activo');
 
@@ -18,6 +20,4 @@ class Empresario extends Model
             return 0;
         }
     }
-
-
 }

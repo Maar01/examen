@@ -20,6 +20,8 @@ Route::get('clima', 'SOAPController@index');
 
 Route::get('borraEmpresario/{id_empresario}', 'EmpresariosController@borraEmpresario');
 Route::get('desactivar/{id_empresario}', 'EmpresariosController@desactivar');
+Route::get('empresarios/crear/{id?}', 'EmpresariosController@crear');
+Route::post('empresarios/verificar', 'EmpresariosController@verificar');
 Route::resource('empresarios','EmpresariosController');
 Auth::routes();
 

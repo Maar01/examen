@@ -9,8 +9,8 @@
         <div class="title m-b-md">
             Empresarios
             <br>
-            <form>
-                <button type="submit" method="get" action="/empresarios/create">
+            <form method="get" action="/empresarios/crear">
+                <button type="submit" >
                     Agregar empresario
                 </button>
             </form>
